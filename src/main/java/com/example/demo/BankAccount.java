@@ -24,26 +24,38 @@ public class BankAccount {
     }
 
     public void makeDeposit(float amount) {
-        balance += amount;
+        if (amount > 0) {
+            balance += amount;
+        } else {
+            System.out.println("Quantity should be greater than 0");
+        }
     }
 
     public void withdraw(float amount) {
         if (amount > balance) {
-            System.out.println("Insufficient funds");
-        } else {
+            System.out.println("Insufficient funds.");
+        } else if (amount > 0) {
             balance -= amount;
+        } else {
+            System.out.println("Quantity to withdraw should be greater than 0.");
         }
     }
 
-    public void calcMonFee(int fee) {
-        balance -= (balance * fee / 100);
+    public void applyMonthlyFee() {
+        balance -= monthlyFee;
     }
 
-    public void calcMonExtract() {
-        balance += (balance * annualRate / 12);
+    public void calcMonthlyInterest() {
+        float monthlyInterest = (balance * annualRate) / 12;
+        balance += monthlyInterest;
     }
 
-    public String printBankAccount() {
+    public void generateMonthExtract() {
+        applyMonthlyFee();
+        calcMonthlyInterest();
+    }
+
+    public String printAccount() {
         return "Balance: " + balance + " Deposit: " + deposit + " Withdrawal: " + withdrawal +
                 " Annual Rate: " + annualRate + " Monthly Fee: " + monthlyFee;
     }
