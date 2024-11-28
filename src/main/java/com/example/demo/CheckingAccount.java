@@ -1,5 +1,6 @@
 package com.example.demo;
 
+
 public class CheckingAccount extends BankAccount {
     private float overdraftLimit;
 
@@ -32,12 +33,14 @@ public class CheckingAccount extends BankAccount {
 
     @Override
     public void applyMonthlyFee() {
+        if (withdrawal > 4) {
+            monthlyFee += (withdrawal - 4) * 1000;
+        }
         super.applyMonthlyFee();
-    }
-
-    @Override
-public String printAccount() {
-    return super.printAccount() + " Overdraft Limit: " + overdraftLimit + "[Checking Account]";
 }
 
+    @Override
+    public String printAccount() {
+        return super.printAccount() + String.format(", Overdraft Limit: %.2f", overdraftLimit);
+    }
 }
